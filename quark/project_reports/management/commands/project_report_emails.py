@@ -20,11 +20,11 @@ class Command(BaseCommand):
         # exclude reports from just today or reports that can't possibly be in
         # the current academic year
         current_date = timezone.localtime(timezone.now()).date()
-        if current_date.month >= 8:
+        if current_date.month >= 8: # if we've started the next school year
             academic_year_start_date = date(current_date.year, 8, 1)
-        else:
+        else: # otherwise we're still in the previous school year
             academic_year_start_date = date(current_date.year - 1, 8, 1)
-            
+
         unfinished_reports = ProjectReport.objects.filter(
             complete=False, term__year__gte=academic_year_start_date,
             date__lt=current_date)
